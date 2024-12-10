@@ -1,0 +1,98 @@
+sector_analysis_task:
+  description: >
+    Analyze the {topic} to identify key inefficiencies and operational areas for AI-driven optimization.
+    YOU MUST identify at least 6 complete workflows.
+  expected_output: >
+    A prioritized list of at least 6 workflows needing optimization.
+  agent: sector_analysis_agent
+  async_execution: false
+
+process_mapping_task:
+  description: >
+    Map the current workflows for identified inefficiencies, providing a detailed step-by-step breakdown.
+    For each workflow, document:
+    1. Current manual steps
+    2. Who performs each step
+    3. Time taken for each step
+    4. Pain points and inefficiencies
+  expected_output: >
+    Detailed "Before" workflow descriptions for each workflow.
+  agent: process_mapping_agent
+  async_execution: true
+  context_from_tasks:
+    - sector_analysis_task
+
+workflow_redesign_task:
+  description: >
+    Redesign workflows with AI agents at critical steps. For each workflow:
+    1. Design AI-enhanced steps matching the current steps
+    2. Specify which AI agent handles each step
+    3. Detail how the AI improves the process
+  expected_output: >
+    "After" workflow descriptions showing AI enhancements and agent roles.
+  agent: workflow_discovery_agent
+  async_execution: false
+  context_from_tasks:
+    - process_mapping_task
+
+agent_definition_task:
+  description: >
+    For each workflow's AI agents, create a detailed table showing:
+    - Agent Name
+    - Description
+    - Role
+    - Task
+    - Tools
+    - Expected Outcomes
+  expected_output: >
+    Detailed agent tables for each workflow.
+  agent: agent_matching_agent
+  async_execution: false
+  context_from_tasks:
+    - workflow_redesign_task
+
+output_compilation_task:
+  description: >
+    YOU MUST create a complete report showing ALL workflows. For each workflow:
+
+    1. Start with the workflow title and overview
+    2. Show the current process ("Before Summary") with numbered steps
+    3. Show the AI-enhanced process ("After Summary") with numbered steps
+    4. Include the agent table with all columns
+    5. Add time savings calculation
+
+    The output MUST follow this EXACT format for EACH workflow:
+
+    **Workflow Title**
+    Brief overview of the workflow and its importance
+
+    **Before Summary:**
+    1. First step (who: Role, time: X hrs)
+    2. Second step (who: Role, time: Y hrs)
+    etc.
+
+    **After Summary:**
+    1. [AI Agent Name] performs first step
+    2. [AI Agent Name] performs second step
+    etc.
+
+    **Agent Table:**
+    | Agent Name | Description | Role | Task | Tools | Expected Outcomes |
+    |------------|-------------|------|------|-------|-------------------|
+    | [Name] | [Description] | [Role] | [Task] | [Tools] | [Outcomes] |
+
+    Time saved: X hours per workflow run
+
+    YOU MUST:
+    1. Include ALL workflows
+    2. Follow this EXACT format for each workflow
+    3. Write the COMPLETE content to workflow_report.md
+    4. Verify the file contains ALL workflows with FULL details
+  expected_output: >
+    Complete workflow_report.md file containing all workflows in the specified format.
+  agent: sector_analysis_agent
+  async_execution: false
+  context_from_tasks:
+    - process_mapping_task
+    - workflow_redesign_task
+    - agent_definition_task
