@@ -1,5 +1,5 @@
 ```
-**Workflow Title**: Guest Check-in Delays Workflow  
+**Workflow Title**: Guest Check-in Delays Workflow :
 Brief overview of the workflow and its importance: This workflow addresses bottlenecks and inefficiencies in the traditional guest check-in process, aiming to enhance guest experience and operational efficiency by leveraging AI-enabled solutions for quicker and more secure check-ins.
 
 **Before Summary:**  
